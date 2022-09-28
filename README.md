@@ -1,2 +1,2 @@
 # BlogSite
-## Simplate CRUD project
+## Simple CRUD project
