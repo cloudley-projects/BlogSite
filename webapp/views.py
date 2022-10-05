@@ -91,3 +91,6 @@ def addBlog(request):
         new_blog.save()
         return redirect('webapp:my_blog')
     return render(request,'add_blog.html',c)
+
+def csp(request):
+    return render(request,'csp.html')

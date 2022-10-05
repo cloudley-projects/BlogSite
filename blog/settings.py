@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','l31o(vihv8z5r*rkgp(8v3&bkou%60t%#3f3($
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -46,7 +46,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'csp.middleware.CSPMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -131,7 +133,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -142,3 +144,23 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_URL = '/static/'
+
+
+#CSP
+CSP_DEFAULT_SRC = ("'self'", 'cdn.example.net')
+
+CSP_CONNECT_SRC = ("'self'", 'https://www.googleapis.com/identitytoolkit/v3/', 'https://securetoken.googleapis.com/v1/')
+
+CSP_IMG_SRC = ("'self'", 'https://html.sammy-codes.com','https: data:' )
+
+CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com', 'https://cdn.jsdelivr.net/')
+
+CSP_SCRIPT_SRC = ("'self'",'https://cdn.jsdelivr.net/')
+
+CSP_BASE_URI = ("'self'")
+
+CSP_OBJECT_URI = ("'self'")
+
+CSP_FONT_SRC = ("'self'", 'https://fonts.gstatic.com/')
+
+CSP_INCLUDE_NONCE_IN = ['script-src']
