@@ -7,8 +7,36 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-
+from django.http import HttpResponse
 # Create your views here.
+
+#Calling another Cloud Run Service
+import urllib
+
+import google.auth.transport.requests
+import google.oauth2.id_token
+import os
+
+def make_authorized_get_request(request):
+
+    # Cloud Run uses your service's hostname as the `audience` value
+    # audience = 'https://my-cloud-run-service.run.app/'
+    # For Cloud Run, `endpoint` is the URL (hostname + path) receiving the request
+    # endpoint = 'https://my-cloud-run-service.run.app/my/awesome/url'
+
+    endpoint = os.environ.get('CLOUD_RUN_EP', 'https://hello-02-5bkasdfc3a-uc.a.run.app')
+    req = urllib.request.Request(endpoint)
+    audience = endpoint
+    auth_req = google.auth.transport.requests.Request()
+    id_token = google.oauth2.id_token.fetch_id_token(auth_req, audience)
+
+    req.add_header("Authorization", f"Bearer {id_token}")
+    response = urllib.request.urlopen(req)
+    print(response.read())
+
+    return HttpResponse(response.read())
+
+
 def index(request):
     blogdetails = blog.objects.all().reverse()[:5]
     return render(request,'index.html',{'blog':blogdetails})
@@ -94,3 +122,5 @@ def addBlog(request):
 
 def csp(request):
     return render(request,'csp.html')
+
+

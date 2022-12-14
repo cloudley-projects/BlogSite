@@ -8,6 +8,7 @@ urlpatterns = [
     path(r'',views.index,name='index'),
     path(r'my_blog/',views.myBlog,name='my_blog'),
     path(r'csp/',views.csp,name='csp'),
+    path(r'cloud_run/',views.make_authorized_get_request,name='cloud_run'),
     path(r'register/',views.register,name='register'),
     path(r'login/',views.login,name='login'),
     path(r'logout/',views.logout,name='logout'),
