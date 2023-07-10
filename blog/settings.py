@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'csp.middleware.CSPMiddleware',
+    #'csp.middleware.CSPMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -143,25 +143,17 @@ USE_TZ = False
 STATICFILES_DIRS = [
     BASE_DIR / "webapp/static",
 ]
-
-STATIC_URL = '/static/'
+STATIC_ROOT = "static"
+STATIC_URL = "/static/"
 
 
 #CSP
-CSP_DEFAULT_SRC = ("'self'", 'cdn.example.net')
-
-CSP_CONNECT_SRC = ("'self'", 'https://www.googleapis.com/identitytoolkit/v3/', 'https://securetoken.googleapis.com/v1/')
-
-CSP_IMG_SRC = ("'self'", 'https://html.sammy-codes.com','https: data:' )
-
-CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com', 'https://cdn.jsdelivr.net/')
-
-CSP_SCRIPT_SRC = ("'self'",'https://cdn.jsdelivr.net/')
-
-CSP_BASE_URI = ("'self'")
-
-CSP_OBJECT_URI = ("'self'")
-
-CSP_FONT_SRC = ("'self'", 'https://fonts.gstatic.com/')
-
-CSP_INCLUDE_NONCE_IN = ['script-src']
+#CSP_DEFAULT_SRC = ("'self'", 'cdn.example.net')
+#CSP_CONNECT_SRC = ("'self'", 'https://www.googleapis.com/identitytoolkit/v3/', 'https://securetoken.googleapis.com/v1/')
+#CSP_IMG_SRC = ("'self'", 'https://html.sammy-codes.com','https: data:' )
+#CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com', 'https://cdn.jsdelivr.net/')
+#CSP_SCRIPT_SRC = ("'self'",'https://cdn.jsdelivr.net/')
+#CSP_BASE_URI = ("'self'")
+#CSP_OBJECT_URI = ("'self'")
+#CSP_FONT_SRC = ("'self'", 'https://fonts.gstatic.com/')
+#CSP_INCLUDE_NONCE_IN = ['script-src']
