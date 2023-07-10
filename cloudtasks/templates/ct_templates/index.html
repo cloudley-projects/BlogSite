@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% csrf_token %}
+<h1>This is Cloud Task Test</h1>    
+   <div class="container">
+    <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Blog</th>
+            <th>Publish Date</th>
+            <th>Author</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for blog in blog %}  
+          <tr>
+            <td>{{blog.Title}}</td>
+            <td>{{blog.Description}}</td>
+            <td>{{blog.Pub_date}}</td>
+            <td>{{blog.Author}}</td>
+          </tr>
+          {% endfor %} 
+        </tbody>
+      </table>
+    </div>
+{% endblock content %}

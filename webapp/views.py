@@ -18,23 +18,17 @@ import google.oauth2.id_token
 import os
 
 def make_authorized_get_request(request):
-
-    # Cloud Run uses your service's hostname as the `audience` value
-    # audience = 'https://my-cloud-run-service.run.app/'
-    # For Cloud Run, `endpoint` is the URL (hostname + path) receiving the request
-    # endpoint = 'https://my-cloud-run-service.run.app/my/awesome/url'
-
-    endpoint = os.environ.get('CLOUD_RUN_EP', 'https://hello-02-5bkasdfc3a-uc.a.run.app')
-    req = urllib.request.Request(endpoint)
-    audience = endpoint
+    query_param = request.GET['url']
+    req = urllib.request.Request(query_param)
+    audience = query_param
     auth_req = google.auth.transport.requests.Request()
     id_token = google.oauth2.id_token.fetch_id_token(auth_req, audience)
 
     req.add_header("Authorization", f"Bearer {id_token}")
     response = urllib.request.urlopen(req)
-    print(response.read())
-
-    return HttpResponse(response.read())
+    data = response.read()
+    print(data)
+    return HttpResponse(data)
 
 
 def index(request):
@@ -72,6 +66,7 @@ def deleteBlog(request,blog_id):
 def register(request):
     c={}
     if request.method == "POST":
+        print(request)
         fname=request.POST.get('firstName')
         lname=request.POST.get('lastName')
         email=request.POST.get('email')

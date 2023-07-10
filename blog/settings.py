@@ -37,6 +37,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'webapp',
+    'cloudtasks',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
