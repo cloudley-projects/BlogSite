@@ -16,7 +16,7 @@ import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+print(BASE_DIR)
 
 # Create the loggers object
 logger = logging.getLogger('__name__')
@@ -141,9 +141,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATICFILES_DIRS = [
-    BASE_DIR / "webapp/static",
+   os.path.join(BASE_DIR, 'static')
 ]
-STATIC_ROOT = "static"
+#STATIC_ROOT = "static"
 STATIC_URL = "/static/"
 
 

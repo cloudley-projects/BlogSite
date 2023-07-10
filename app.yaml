@@ -5,19 +5,19 @@ runtime_config:
   python_version: 3
 #network:
 #  instance_ip_mode: internal
-#  name: projects/harshit-patel/global/networks/default
+#  name: projects/project-name/global/networks/default
 #  subnetwork_name: default
-#  name: projects/harshit-patel-ae/global/networks/shared-vpc-network
+#  name: projects/project-name/global/networks/shared-vpc-network
 #  subnetwork_name: shared-vpc-network
 #  instance_tag: aef-inst
 
 env_variables:
-  DB_NAME: "blogsite"
-  DB_USER: "root"
-  DB_PASSWORD: "Demo4594"
-  DB_HOST: "34.170.90.173"
+  DB_NAME: ""
+  DB_USER: ""
+  DB_PASSWORD: ""
+  DB_HOST: ""
   DB_PORT: "3306"
-  DB_TYPE: "cloudsql"
+  DB_TYPE: ""
 
 handlers:
 - url: /static
