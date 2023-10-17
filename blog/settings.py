@@ -25,7 +25,7 @@ logger = logging.getLogger('__name__')
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ.get('SECRET_KEY','l31o(vihv8z5r*rkgp(8v3&bkou%60t%#3f3($wm0_y@zuc9@$')
+SECRET_KEY = os.environ.get('SECRET_KEY','l31o(vihv8z5r*rkgp(8v3&bkou%60tda3f3($wm0_y@zuc9@$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', True)
@@ -141,9 +141,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, 'static')
+#   os.path.join(BASE_DIR, 'static')
 ]
-#STATIC_ROOT = "static"
+STATIC_ROOT = "static"
 STATIC_URL = "/static/"
 
 

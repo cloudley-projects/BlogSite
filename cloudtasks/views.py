@@ -7,7 +7,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 # Google Cloud Imports
@@ -29,16 +29,17 @@ def create_task(request):
     location = 'us-central1'
     queue = 'my-appengine-queue'
     payload = '{"payload":"Hello World"}'
-    in_seconds = 180
+    in_seconds = 30
     deadline = 900
 
     client = tasks_v2.CloudTasksClient()
     parent = client.queue_path(project, location, queue)
-    #'url': 'https://8000-cs-674139930637-default.cs-us-central1-brqy.cloudshell.dev/cloudtasks/process_task'
+    #my_url = 'https://8000-cs-674139930637-default.cs-us-central1-brqy.cloudshell.dev/cloudtasks/process_task'
+    my_url = 'https://project-name.uc.r.appspot.com/cloudtasks/process_task'
     task = {
         'http_request': {  # Specify the type of request.
             'http_method': tasks_v2.HttpMethod.POST,
-            'url': 'https://project-name.uc.r.appspot.com/cloudtasks/process_task'
+            'url': my_url
         }
     }
     if payload is not None:
@@ -63,12 +64,13 @@ def create_task(request):
 
         # Add the timestamp to the tasks.
         task['schedule_time'] = timestamp
-
     # Use the client to build and send the task.
     response = client.create_task(parent=parent, task=task)
-    print('Created task {}'.format(response.name))
-    return render(request,'ct_templates/ct_task.html',{'task_response': response})
+    #print('Created task {}'.format(response.name))
+    #return render(request,'ct_templates/ct_task.html',{'task_response': response})
+    return JsonResponse(response.name,  safe=False)
 
+@csrf_exempt
 def task_handler(request):
     if request.method == "POST":
         """Log the request payload."""
@@ -86,7 +88,7 @@ def create_task_cf(request):
     payload = '{"payload":"This is Cloud Function test with Cloud Task"}'
     in_seconds = 0
     deadline = 900
-    audience="https://cloud-task-function-uc.a.run.app"
+    audience="https://task-function-uc.a.run.app"
     auth_req = google.auth.transport.requests.Request()
     id_token = google.oauth2.id_token.fetch_id_token(auth_req, audience)
     bearer_token = "bearer " + id_token
@@ -98,10 +100,10 @@ def create_task_cf(request):
     task = {
         'http_request': {  # Specify the type of request.
             'http_method': tasks_v2.HttpMethod.POST,
-            'url': 'https://cloud-task-function-uc.a.run.app',
+            'url': 'https://project-name.uc.r.appspot.com/webapp/',
             "oidc_token": {
             "service_account_email": "106805926654-compute@developer.gserviceaccount.com",
-            "audience": "https://cloud-task-function-uc.a.run.app",
+            "audience": "https://project-name.uc.r.appspot.com/webapp/",
         },
         }
     }

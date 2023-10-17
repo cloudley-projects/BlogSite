@@ -1,0 +1,4 @@
+cron:
+- description: "Every Minute Index Job"
+  url: /webapp/
+  schedule: every 1 mins

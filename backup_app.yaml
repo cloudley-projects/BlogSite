@@ -1,0 +1,49 @@
+env: flex
+runtime: python311
+entrypoint: gunicorn -b :$PORT blog.wsgi
+#runtime_config:
+#  python_version: 3
+#network:
+#  instance_ip_mode: internal
+#  name: projects/project-name/global/networks/default
+#  subnetwork_name: default
+#  name: projects/project-name/global/networks/shared-vpc-network
+#  subnetwork_name: shared-vpc-network
+#  instance_tag: aef-inst
+
+#env_variables:
+#  DB_NAME: 
+#  DB_USER: 
+#  DB_PASSWORD: 
+#  DB_HOST: 
+#  DB_PORT: "3306"
+#  DB_TYPE: "cloudsql"
+
+handlers:
+- url: /static
+  static_dir: static/
+
+- url: /.*
+  script: auto
+
+liveness_check:
+  initial_delay_sec: '300'
+  check_interval_sec: '30'
+  timeout_sec: '4'
+  failure_threshold: 4
+  success_threshold: 2
+
+readiness_check:
+  check_interval_sec: '5'
+  timeout_sec: '4'
+  failure_threshold: 2
+  success_threshold: 2
+  app_start_timeout_sec: '300'
+  
+#automatic_scaling:
+#  min_num_instances: 1
+#  max_num_instances: 3
+#  cool_down_period_sec: 180
+#  cpu_utilization:
+#    target_utilization: 0.6
+#  target_concurrent_requests: 100

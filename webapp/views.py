@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-import requests
+import requests,json, os
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -7,30 +7,18 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 
 #Calling another Cloud Run Service
 import urllib
-
 import google.auth.transport.requests
 import google.oauth2.id_token
-import os
-
-def make_authorized_get_request(request):
-    query_param = request.GET['url']
-    req = urllib.request.Request(query_param)
-    audience = query_param
-    auth_req = google.auth.transport.requests.Request()
-    id_token = google.oauth2.id_token.fetch_id_token(auth_req, audience)
-
-    req.add_header("Authorization", f"Bearer {id_token}")
-    response = urllib.request.urlopen(req)
-    data = response.read()
-    print(data)
-    return HttpResponse(data)
 
 
+@csrf_exempt
 def index(request):
     blogdetails = blog.objects.all().reverse()[:5]
     return render(request,'index.html',{'blog':blogdetails})
@@ -118,4 +106,21 @@ def addBlog(request):
 def csp(request):
     return render(request,'csp.html')
 
+#Serve high resolution image
+def download_image(request):
+    return render(request,'images.html')
 
+
+def make_authorized_get_request(request):
+    headers = request.headers
+    query_param = request.GET['url']
+    query_param = "https://"+query_param+"/headers"
+    req = urllib.request.Request(query_param)
+    audience = query_param
+    auth_req = google.auth.transport.requests.Request()
+    id_token = google.oauth2.id_token.fetch_id_token(auth_req, audience)
+    req.add_header("Authorization", f"Bearer {id_token}")
+    response = urllib.request.urlopen(req)
+    data = response.read()
+    result = {"cloud-run-1-headers":dict(headers), "cloud-run-2-headers": data.decode("UTF-8")}
+    return JsonResponse(result)
