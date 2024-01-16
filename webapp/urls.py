@@ -16,5 +16,6 @@ urlpatterns = [
     path(r'csp/',views.csp,name='csp'),
     path(r'cloud_run/',views.make_authorized_get_request,name='cloud_run'),
     path(r'images/', views.download_image, name='download_image'),
-    path('call_cloud_run/', views.make_authorized_get_request, name='make_authorized_get_request')
+    path('call_cloud_run/', views.make_authorized_get_request, name='make_authorized_get_request'),
+    path('get_request/', views.make_get_request, name='make_get_request')
 ]

@@ -1,23 +1,13 @@
-runtime: custom
-api_version: '1.0'
-env: flexible
-
+runtime: python39
+entrypoint: gunicorn -b :$PORT blog.wsgi
 env_variables:
   DB_HOST: 
   DB_NAME: 
   DB_PASSWORD: 
   DB_PORT: '3306'
   DB_TYPE: cloudsql
-  DB_USER: root
+  DB_USER: 
 
-automatic_scaling:
-  min_num_instances: 0
-  max_num_instances: 2
-  cool_down_period_sec: 180
-  cpu_utilization:
-    target_utilization: 0.6
-  target_concurrent_requests: 100
-
-network:
-  instance_tag: default
-  name: default
+vpc_access_connector:
+  name: "projects/harshit-patel/locations/us-central1/connectors/new-vpc-connector"
+  egress_setting: all-traffic

@@ -34,7 +34,7 @@ def create_task(request):
 
     client = tasks_v2.CloudTasksClient()
     parent = client.queue_path(project, location, queue)
-    #my_url = 'https://8000-cs-674139930637-default.cs-us-central1-brqy.cloudshell.dev/cloudtasks/process_task'
+    #my_url = 'https://cs-us-central1-brqy.cloudshell.dev/cloudtasks/process_task'
     my_url = 'https://project-name.uc.r.appspot.com/cloudtasks/process_task'
     task = {
         'http_request': {  # Specify the type of request.
@@ -96,13 +96,13 @@ def create_task_cf(request):
 
     client = tasks_v2.CloudTasksClient()
     parent = client.queue_path(project, location, queue)
-    #'url': 'https://674139930637-default.cs-us-central1-brqy.cloudshell.dev/cloudtasks/process_task'
+    #'url': 'https://us-central1-brqy.cloudshell.dev/cloudtasks/process_task'
     task = {
         'http_request': {  # Specify the type of request.
             'http_method': tasks_v2.HttpMethod.POST,
             'url': 'https://project-name.uc.r.appspot.com/webapp/',
             "oidc_token": {
-            "service_account_email": "106805926654-compute@developer.gserviceaccount.com",
+            "service_account_email": "compute@developer.gserviceaccount.com",
             "audience": "https://project-name.uc.r.appspot.com/webapp/",
         },
         }

@@ -12,5 +12,5 @@ RUN apt-get update && \
   gunicorn \
   && rm -rf /var/lib/apt/lists/*
 RUN pip3 install -r requirements.txt
-EXPOSE 8000
-CMD ["gunicorn","--chdir","/Blogsite", "--bind", ":8000", "--workers", "3", "blog.wsgi:application"]
+EXPOSE 8080
+CMD ["gunicorn","--chdir","/Blogsite", "--bind", ":8080", "--workers", "3", "blog.wsgi:application"]

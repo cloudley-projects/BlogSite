@@ -21,7 +21,7 @@ import google.oauth2.id_token
 @csrf_exempt
 def index(request):
     blogdetails = blog.objects.all().reverse()[:5]
-    return render(request,'index.html',{'blog':blogdetails})
+    return render(request,'index.html',{'blog':blogdetails}, status=200)
 
 @login_required(login_url='/webapp/login/')
 def myBlog(request):
@@ -124,3 +124,11 @@ def make_authorized_get_request(request):
     data = response.read()
     result = {"cloud-run-1-headers":dict(headers), "cloud-run-2-headers": data.decode("UTF-8")}
     return JsonResponse(result)
+
+def make_get_request(request):
+    headers = request.headers
+    query_param = request.GET['url']
+    query_param = "https://"+query_param+"/"
+    req = urllib.request.Request(query_param)
+    response = urllib.request.urlopen(req)
+    return HttpResponse(response)
